@@ -18,7 +18,7 @@ class CreateTodosTable extends Migration
             $table->string('title');
             $table->boolean('completed')->default(false);
             $table->string('priority')->default('normal');
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     
         });

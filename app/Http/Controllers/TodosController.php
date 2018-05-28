@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Todo;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TodoController extends Controller
+class TodosController extends Controller
 {
 
         public function index()
     {
-        return Todo::all();
+        return Todo::with(['user'])->get();
     }
     /**
      * Show the form for creating a new resource.
@@ -30,11 +32,20 @@ class TodoController extends Controller
     public function store(Request $request)
     {
 
+
         $todo = Todo::create([
             'title' => $request['title'],
-        	// 'priority' => $request['priority'],
-        	// 'user_id' => auth()->id() or 'user_id' => Auth::user()->id
+        	'user_id' => Auth::user()->id
         ]);
+
+		// $request->validate(
+		//         ['title'=>'required']);
+
+		// $todo = new Todo();
+		// $todo->title = $request['title'];
+		// $todo->user_id = Auth::user()->id;
+		// $todo->save();
+		        
         return $todo;
     }
     /**
@@ -86,4 +97,10 @@ class TodoController extends Controller
 
         return Todo::all();
     }
+
+    //     public function getUserTodos($id)   
+    // {   
+    //      $user = Auth::user();  
+    //      return $todos = $user->todos()->get();
+    // }
 }
