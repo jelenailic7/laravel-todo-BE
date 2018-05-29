@@ -35,17 +35,11 @@ class TodosController extends Controller
 
         $todo = Todo::create([
             'title' => $request['title'],
+            'priority' => $request['priority'],
+            'completed' => $request['completed'],
         	'user_id' => Auth::user()->id
         ]);
 
-		// $request->validate(
-		//         ['title'=>'required']);
-
-		// $todo = new Todo();
-		// $todo->title = $request['title'];
-		// $todo->user_id = Auth::user()->id;
-		// $todo->save();
-		        
         return $todo;
     }
     /**
@@ -77,10 +71,18 @@ class TodosController extends Controller
      */
     public function update(Request $request, $id)
     {
+    	\Log::info($id);
         $todo = Todo::find($id);
+
+        //\Log::info($todo);
+
         $todo->update([
-        	'title' => $request['title']
+        	'title' => $request['title'],
+        	'priority' => $request['priority'],
+            'completed' => $request['completed'],
+
         ]);
+
         return $todo;
     }
        
@@ -98,9 +100,4 @@ class TodosController extends Controller
         return Todo::all();
     }
 
-    //     public function getUserTodos($id)   
-    // {   
-    //      $user = Auth::user();  
-    //      return $todos = $user->todos()->get();
-    // }
 }

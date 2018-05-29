@@ -13,12 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 Route::post('/login', 'Auth\LoginController@authenticate');
-// Route::post('/logout','Auth\LoginController@logout');
-
-// Route::middleware('jwt')->get('todos', 'TodosController@index');
 Route::middleware('jwt')->get('todos', 'UsersController@getUserTodos');
-
+Route::middleware('jwt')->get('todos/{id}', 'TodosController@show');
 Route::middleware('jwt')->post('todos', 'TodosController@store');
 Route::middleware('jwt')->delete('todos/{id}', 'TodosController@destroy');
-Route::middleware('api')->put('todos/{id}', 'TodosController@update');
+Route::middleware('jwt')->put('todos/{id}', 'TodosController@update');
 
