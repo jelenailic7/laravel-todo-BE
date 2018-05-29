@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Barryvdh\Cors\HandleCors;
 
 class Kernel extends HttpKernel
 {
@@ -35,12 +36,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Barryvdh\Cors\HandleCors::class,
         ],
 
         'api' => [
             'throttle:60,1',
-            'bindings',
-        ],
+            'bindings', 
+            HandleCors::class,         ],
     ];
 
     /**
@@ -59,5 +61,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+         'jwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
     ];
 }
